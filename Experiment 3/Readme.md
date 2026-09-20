@@ -10,7 +10,7 @@ ifconfig
 The IP address of the Kali machine is identified as 192.168.42.136.
 
 Step 2: Identify the IP address of the target machine
-Open the terminal in the Metasploitable machine and identify its IP address. The IP address of the Metasploitable machine is 192.168.159.136.
+Open the terminal in the Metasploitable machine and identify its IP address. The IP address of the Metasploitable machine is 192.168.42.136.
 Then, from Kali:
 ping 192.168.42.136
 After confirming connectivity, Nmap is used from Kali Linux to scan Metasploitable (192.168.42.136).
