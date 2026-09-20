@@ -1,42 +1,46 @@
-Experiment 1: Scanning for Vulnerabilities in a Network
+Experiment Name: Basic Network Traffic Analysis with Wireshark  
 
-Objective
-To identify active hosts and open ports on a target network using Nmap, and to detect known vulnerabilities on those hosts using Nessus. 
+Objective: Capture and examine network packets to detect suspicious activity and cleartext credentials within a simulated network environment.  
 
 Procedure
-Step 1: Identify the IP address of the Kali machine
-Open the terminal in the Kali Linux machine and execute:
-ifconfig
-The IP address of the Kali machine is identified as 192.168.42.136.
 
-Step 2: Identify the IP address of the target machine
-Open the terminal in the Metasploitable machine and identify its IP address. The IP address of the Metasploitable machine is 192.168.42.136.
-Then, from Kali:
-ping 192.168.42.136
-After confirming connectivity, Nmap is used from Kali Linux to scan Metasploitable (192.168.42.136).
+Set VM network adapters to Host-Only / Internal mode.
+Identify VM IP addresses (ip a on Kali; ifconfig on Metasploitable).
+Ensure required packages are installed:
+sudo apt update && sudo apt install nmap wireshark tcpdump tshark -y
 
-Step 3: Verify connectivity between the Kali and target machines
-From the Kali terminal, send ICMP packets to the target machine using:
-ping 192.168.42.136
-The successful replies confirm that the Kali machine can communicate with the target.
+Launch Wireshark with capture privileges:
+sudo wireshark
 
-Step 4: Scan the target machine for open ports
-Use Nmap to scan the target machine:
-nmap -Pn -n 192.168.42.136
+Execution Steps -
+Step 1: Verify Connectivity Test connectivity from the Kali VM to the target machine:
+ping -c 3 192.168.42.136
 
-The scan identifies the open TCP ports and their associated services. The output shows ports such as 21 (FTP), 22 (SSH), 23 (Telnet), 25 (SMTP), 80 (HTTP), 139 (NetBIOS-SSN), 445 (Microsoft-DS), 3306 (MySQL), 5432 (PostgreSQL), 5900 (VNC), 6000 (X11) and others as open.
+Step 2: Port & Service Scanning Perform a SYN scan to detect open ports and running services:
+sudo nmap -sS -Pn 192.168.42.136
 
-Step 5: Launch Nessus
-Open the Nessus web interface in a browser, typically:
-https://localhost:8834
-Launch Nessus and proceed to the Nessus interface.
+Step 3: Start Wireshark Packet Capture (Missing Step)
+In the Wireshark interface, select the active network interface corresponding to the Host-Only network (e.g., eth0 or eth1).
+Click the blue shark fin icon (Start Capture) to begin live packet capture before generating traffic.
 
-Step 6: Configure and run the Nessus scan
-Create a new Basic Network Scan and enter the target IP address:
-192.168.42.136
-Save and launch the scan. Nessus analyzes the target for known security vulnerabilities.
+Step 4: Generate Lab Traffic Execute network interactions to generate unencrypted traffic while capture is active:
+HTTP:
+curl http://192.168.42.136/
+FTP:
+ftp 192.168.42.136
+# Login: msfadmin / Password: msfadmin
+Telnet:
+telnet 192.168.42.136
+# Login: msfadmin / Password: msfadmin
 
-Step 7: Review the Nessus vulnerability results
-After the scan is completed, open the scan results. Nessus displays the vulnerabilities according to their severity, such as Critical, High, Medium, Low and Informational.
+Step 5: Filter & Analyze Plaintext Credentials Apply display filters in Wireshark to locate cleartext data:
+Filter target IP traffic: ip.addr == 192.168.42.136
+Inspect FTP credentials: ftp.request.command == "USER" || ftp.request.command == "PASS"
+Inspect Telnet session traffic: telnet (Right-click packet → Follow → TCP Stream)
+Inspect HTTP traffic & authentication: http or http.authorization
 
-The obtained results include findings such as UnrealIRCd Backdoor Detection, VNC Server Password Password, SSL Version 2 and 3 Protocol Detection, Bind Shell Backdoor Detection, Apache Tomcat Multiple Issues, SSL Multiple Issues, NFS Shares World Readable, and Samba Backdoor Vulnerability.
+Step 6: Save Capture & Export Evidence
+Stop packet capture.
+Save session: File → Save As → lab_capture.pcap.
+Export transferred objects: File → Export Objects → HTTP.
+
