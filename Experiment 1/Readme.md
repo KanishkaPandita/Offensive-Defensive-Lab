@@ -27,14 +27,14 @@ Step 4: Generate Lab Traffic Execute network interactions to generate unencrypte
 HTTP:
 curl http://192.168.42.136/
 FTP:
-ftp 192.168.56.101
+ftp 192.168.42.136
 # Login: msfadmin / Password: msfadmin
 Telnet:
-telnet 192.168.56.101
+telnet 192.168.42.136
 # Login: msfadmin / Password: msfadmin
 
 Step 5: Filter & Analyze Plaintext Credentials Apply display filters in Wireshark to locate cleartext data:
-Filter target IP traffic: ip.addr == 192.168.56.101
+Filter target IP traffic: ip.addr == 192.168.42.136
 Inspect FTP credentials: ftp.request.command == "USER" || ftp.request.command == "PASS"
 Inspect Telnet session traffic: telnet (Right-click packet → Follow → TCP Stream)
 Inspect HTTP traffic & authentication: http or http.authorization
