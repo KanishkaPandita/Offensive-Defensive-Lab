@@ -114,7 +114,7 @@ The `-sV` option attempts to identify running services and their versions.
 
 **Note:** A packet capture confirms that traffic was observed, but it does not by itself prove that Snort generated an alert.
 
-## 📊 Results and Observations
+##  Results and Observations
 The experiment workflow covers the configuration of pfSense, installation of Snort, activation of community rules, and generation of Nmap traffic from Kali Linux toward Metasploitable.
 
 The setup demonstrates how a firewall manages network traffic and how an IDS can inspect monitored traffic for patterns matching security rules.
