@@ -1,94 +1,146 @@
-Experiment 4: Firewall and IDS Setup Using pfSense and Snort
-Aim
-To build a small virtual network, configure pfSense as its firewall, install Snort as an intrusion detection system (IDS), and examine traffic generated from Kali Linux with Nmap.
+# Experiment 4: Firewall and IDS Setup Using pfSense and Snort
 
-Lab requirements
-VMware Workstation or VMware Player
-pfSense firewall virtual machine
-Kali Linux virtual machine
-Metasploitable virtual machine
-VMware virtual networks: NAT (VMnet8) and a private network (VMnet1)
-Snort package for pfSense and GPLv2 Community Rules
-Network topology
-The pfSense WAN interface connects to VMware NAT (VMnet8). Its LAN interface and both test machines connect to the private VMnet1 network. Kali is used to generate test traffic; Metasploitable is the target host.
+##  Aim
+To build a virtual network, configure **pfSense as a firewall**, install **Snort as an Intrusion Detection System (IDS)**, and analyze network traffic generated from Kali Linux using Nmap.
 
+##  Objectives
+- Configure pfSense as a network firewall.
+- Create an isolated virtual network using VMware.
+- Install and configure Snort IDS.
+- Enable GPLv2 Community Rules.
+- Generate network scanning traffic using Nmap.
+- Monitor and analyze IDS alerts.
+
+##  Lab Requirements
+- VMware Workstation or VMware Player
+- pfSense Firewall VM
+- Kali Linux VM
+- Metasploitable VM
+- VMware NAT Network (VMnet8)
+- VMware Private Network (VMnet1)
+- Snort package for pfSense
+- GPLv2 Community Rules
+
+##  Network Topology
+
+```text
                     Internet
                        |
-              VMware NAT (VMnet8)
+                VMware NAT (VMnet8)
                        |
-                 pfSense WAN
-                 pfSense firewall
-                 pfSense LAN
+                   pfSense WAN
+                  [ Firewall ]
+                   pfSense LAN
                   192.168.1.1
                        |
-               Private LAN (VMnet1)
-                 /             \
-       Kali Linux               Metasploitable
-       192.168.1.101            192.168.1.100
-       Scanner                  Test target
-Device or interface	IPv4 address	VMware network	Purpose
-pfSense WAN	DHCP from VMnet8	NAT (VMnet8)	Upstream connectivity
-pfSense LAN	192.168.1.1/24	Private (VMnet1)	LAN gateway and firewall
-Kali Linux	192.168.1.101/24	Private (VMnet1)	Nmap traffic source
-Metasploitable	192.168.1.100/24	Private (VMnet1)	Authorized lab target
-Procedure
-1. Create and connect the virtual machines
-Create the pfSense, Kali, and Metasploitable virtual machines in VMware.
-Connect pfSense’s WAN adapter to NAT (VMnet8) and its LAN adapter to the private network (VMnet1).
-Connect Kali and Metasploitable to VMnet1. The two test machines should remain on the private lab network.
-Start the VMs and confirm that the intended virtual adapters are connected.
-2. Configure the pfSense LAN
-From the pfSense console or WebGUI, assign the interfaces so the WAN uses VMnet8 and LAN uses VMnet1. In this lab the LAN interface is em1.
+                Private LAN (VMnet1)
+                   /          \
+                  /            \
+          Kali Linux        Metasploitable
+        192.168.1.101       192.168.1.100
+          Nmap Scanner       Test Target
+```
 
-Set the pfSense LAN IPv4 address to 192.168.1.1/24.
+##  IP Address Configuration
 
-Set Kali to 192.168.1.101/24 and Metasploitable to 192.168.1.100/24.
+| Device | IP Address | Network | Purpose |
+|---|---|---|---|
+| pfSense WAN | DHCP | VMnet8 | Upstream connectivity |
+| pfSense LAN | 192.168.1.1/24 | VMnet1 | Firewall and gateway |
+| Kali Linux | 192.168.1.101/24 | VMnet1 | Traffic generation |
+| Metasploitable | 192.168.1.100/24 | VMnet1 | Test target |
 
-Use 192.168.1.1 as the default gateway on the LAN hosts when a gateway is needed.
+##  Procedure
 
-Check local connectivity between the hosts and pfSense before testing IDS behavior. For example, from Kali:
+### 1. Configure the Virtual Network
+- Create three virtual machines in VMware.
+- Connect pfSense WAN to VMnet8.
+- Connect pfSense LAN, Kali Linux, and Metasploitable to VMnet1.
+- Keep the test machines on the isolated lab network.
 
+### 2. Configure pfSense LAN
+- Assign WAN and LAN interfaces.
+- Set the LAN IP address to `192.168.1.1/24`.
+- Configure Kali Linux as `192.168.1.101/24`.
+- Configure Metasploitable as `192.168.1.100/24`.
+- Set the gateway to `192.168.1.1` where required.
+
+Test connectivity from Kali Linux:
+
+```bash
 ping -c 4 192.168.1.1
 ping -c 4 192.168.1.100
-3. Configure LAN firewall rules
-In pfSense, open Firewall → Rules → LAN. Add only the pass rules needed for the lab, with the LAN network or required host as the source and the appropriate destination. Use TCP/UDP as appropriate for the service.
+```
 
-Action	Protocol and port	Use
-Pass	TCP/UDP 53	DNS queries
-Pass	TCP 80	HTTP
-Pass	TCP 443	HTTPS
-Block	Any other traffic not required by the lab	Reduce unnecessary access
-Place specific pass rules before a final block rule if using an explicit catch-all block. Review the existing rules and rule order before applying changes. pfSense evaluates rules on the interface where traffic enters; the LAN rules govern traffic arriving from VMnet1. Rules should be scoped to the intended lab hosts and services rather than exposing services broadly.
+### 3. Configure Firewall Rules
+Navigate to **Firewall → Rules → LAN** in the pfSense WebGUI.
 
-4. Install Snort
-Sign in to the pfSense WebGUI.
-Open System → Package Manager → Available Packages.
-Find and install Snort.
-After installation, open Services → Snort and check that the Snort service page is available.
-5. Configure Snort on the LAN interface
-Open Services → Snort → Snort Interfaces.
-Add the LAN interface (em1) as the monitored interface.
-Save and apply the interface settings.
-Review the interface configuration and confirm that it monitors the private LAN containing Kali and Metasploitable.
-6. Update and enable the community rules
-Open Snort’s Global Settings or rules update settings.
-Enable the GPLv2 Community Rules source and save the setting.
-Run the rules update and wait for it to complete.
-In the rules or SID management page, enable the relevant downloaded rules for the LAN interface.
-Apply the configuration and verify the interface/service status before generating traffic.
-7. Generate test traffic from Kali
-From Kali, scan the Metasploitable host on the isolated lab network. For example:
+- Configure only the required traffic rules.
+- Allow required services such as DNS, HTTP, and HTTPS when needed.
+- Review rule order and existing rules before applying changes.
+- Use a final block rule only after confirming that necessary management and lab traffic will not be interrupted.
 
+### 4. Install Snort
+- Open **System → Package Manager → Available Packages**.
+- Search for Snort and install it.
+- Navigate to **Services → Snort** to verify that the package is available.
+
+### 5. Configure Snort IDS
+- Open **Services → Snort → Snort Interfaces**.
+- Add the LAN interface (em1) for monitoring.
+- Save and apply the configuration.
+- Verify that the interface and Snort service are enabled.
+
+### 6. Enable Community Rules
+- Open Snort's global settings or rules update settings.
+- Enable the GPLv2 Community Rules source.
+- Update the rules.
+- Enable relevant downloaded rules and apply the configuration.
+
+### 7. Generate Test Traffic Using Nmap
+From Kali Linux, scan the authorized Metasploitable target:
+
+```bash
 nmap -sV 192.168.1.100
-The -sV option requests service/version detection. Run scans only against systems in the authorized lab. Record the command and the observed result in the lab report if additional experiment notes are available.
+```
 
-8. Verify IDS alerts
-Open Services → Snort → Alerts in pfSense after generating the scan traffic.
-Review recent alerts and correlate their timestamps with the Nmap scan.
-If the alert list is empty, check that the Snort service is running, the LAN interface is enabled, rules were downloaded and enabled, and the scan traffic reaches the monitored interface.
-A packet capture can confirm that packets reach the LAN interface; it is separate evidence from a Snort alert and should not be reported as an alert by itself.
-Result
-The experiment was completed using the VMware topology described above, with pfSense LAN at 192.168.1.1, Kali at 192.168.1.101, and Metasploitable at 192.168.1.100. The lab workflow covered LAN firewall configuration, Snort installation and LAN monitoring, GPLv2 Community Rules, Nmap traffic generation, and alert review. The experiment demonstrated the setup and use of pfSense and Snort in an isolated virtual lab. No specific alert count, rule name, scan finding, or screenshot is included here because those details were not provided for this README.
+The `-sV` option attempts to identify running services and their versions.
 
-Conclusion
-This lab provided practice configuring a stateful firewall and an IDS in a virtual network. It also demonstrated a basic workflow for generating traffic from Kali and reviewing Snort alerts on pfSense.
+### 8. Analyze IDS Alerts
+- Open **Services → Snort → Alerts** in pfSense.
+- Review alerts generated during the scan.
+- Compare alert timestamps with the Nmap scan time.
+- If no alerts appear, check the Snort service, monitored interface, enabled rules, and traffic visibility.
+
+**Note:** A packet capture confirms that traffic was observed, but it does not by itself prove that Snort generated an alert.
+
+## 📊 Results and Observations
+The experiment workflow covers the configuration of pfSense, installation of Snort, activation of community rules, and generation of Nmap traffic from Kali Linux toward Metasploitable.
+
+The setup demonstrates how a firewall manages network traffic and how an IDS can inspect monitored traffic for patterns matching security rules.
+
+Record the actual Snort alerts, rule IDs, detected services, and screenshots after running the experiment. No specific alert count or detection result is assumed in this README.
+
+##  Conclusion
+This experiment provides practical experience with firewall configuration and intrusion detection in a virtual network. It demonstrates how pfSense and Snort can be used together to monitor network activity and investigate possible scanning behavior.
+
+##  Security Notes
+- Run scans only against systems you own or have permission to test.
+- Keep Metasploitable isolated from public networks.
+- Do not expose the vulnerable target to the internet.
+- Back up pfSense configuration before changing firewall rules.
+
+##  Tools and Technologies
+- **pfSense:** Firewall and network security
+- **Snort:** Intrusion Detection System (IDS)
+- **Kali Linux:** Security testing platform
+- **Nmap:** Network scanning and service detection
+- **Metasploitable:** Intentionally vulnerable test machine
+- **VMware:** Virtualization platform
+
+##  Learning Outcomes
+- Understanding firewall rules and network segmentation.
+- Learning IDS installation and rule configuration.
+- Generating and analyzing network scanning traffic.
+- Understanding the difference between packet capture and IDS alerts.
+- Practicing security monitoring in an isolated lab environment.
