@@ -1,98 +1,89 @@
-Experiment 8: Mapping Threats with MITRE ATT&CK
-Aim
-To analyze a sample cyberattack scenario, map the identified attack
-techniques to the MITRE ATT&CK framework, and recommend suitable
-security mitigations.
-Overview
-MITRE ATT&CK is a knowledge base of adversary tactics and techniques
-based on observed cyberattack behavior. It helps security learners and
-analysts understand how attacks may progress and organize their findings
-using a common framework.
+# Experiment 8: Mapping Threats with MITRE ATT&CK
 
-In this practical, the MITRE ATT&CK website, Enterprise Matrix,
-technique pages, and ATT&CK Navigator were explored.
-Tools and Requirements
+## Aim
+To analyze a sample cyberattack scenario, map the identified attack techniques to the MITRE ATT&CK framework, and recommend suitable security mitigations.
+
+## Overview
+MITRE ATT&CK is a cybersecurity framework that provides information about real-world attacker tactics and techniques. It helps security analysts understand how attackers exploit vulnerabilities, gain access, and perform malicious activities.
+
+In this practical, I explored the MITRE ATT&CK website, Enterprise Matrix, technique pages, and ATT&CK Navigator.
+
+## Tools and Requirements
 - Computer with internet access
 - Web browser
-- MITRE ATT&CK website
-- MITRE ATT&CK
-  Navigator
-Practical Work
-1. Explore the MITRE ATT&CK website
-Open https://attack.mitre.org/ and explore the framework and its
-Enterprise ATT&CK resources.
-2. Study Exploitation for Privilege Escalation
-Open the Exploitation for Privilege Escalation technique page. Read
-its description to understand how an attacker may exploit a software
-vulnerability to obtain higher privileges.
-3. Study Exploit Public-Facing Application
-Open the Exploit Public-Facing Application technique page. Examine
-how vulnerabilities in applications exposed to the internet may be
-exploited to gain access to a system.
-4. Explore the Enterprise ATT&CK Matrix
-Open the Enterprise ATT&CK Matrix and observe how tactics and techniques
-are organized. Tactics describe an attacker's objective, while
-techniques describe how that objective may be achieved.
-5. Explore ATT&CK Navigator
-Open ATT&CK Navigator and examine its matrix-based view. Navigator can
-be used to create and view layers for organizing or highlighting
-techniques.
-6. Observe the practical output
-Review the terminal output captured during the practical. Record the
-command and explain its output here only after confirming what was
-executed; the screenshot alone does not establish the command or its
-purpose.
-Techniques Observed
-  Technique name          ATT&CK ID               General purpose
-  Exploitation for        T1068                   Exploiting a
-Privilege Escalation                            vulnerability to gain
-higher privileges
-Exploit Public-Facing   T1190                   Exploiting a
-Application                                     vulnerability in an
-internet-facing
-application
-The technique names and IDs above identify the two technique pages
-shown in the practical screenshots. They should not be treated as
-proof that an attack was executed.
+- MITRE ATT&CK Website
+- MITRE ATT&CK Navigator
 
-Suggested Security Mitigations
-- Keep operating systems, applications, and exposed services updated.
-- Fix known vulnerabilities in internet-facing applications.
-- Limit user and service permissions according to the principle of
-  least privilege.
-- Monitor systems for unusual privilege changes and suspicious
-  activity.
-- Use endpoint protection and centralized logging where available.
-- Perform regular vulnerability assessments and security reviews.
-Screenshots
-Add the screenshots captured during the practical in this order:
-1. MITRE ATT&CK homepage.
-2. Exploitation for Privilege Escalation technique page.
-3. Exploit Public-Facing Application technique page.
-4. Enterprise ATT&CK Matrix.
-5. ATT&CK Navigator.
-6. Terminal output from the practical.
-Suggested folder structure:
-Experiment-8-MITRE-ATTACK/
-├── README.md
-└── screenshots/
-    ├── 01-mitre-homepage.png
-    ├── 02-privilege-escalation.png
-    ├── 03-public-facing-application.png
-    ├── 04-enterprise-matrix.png
-    ├── 05-attack-navigator.png
-    └── 06-terminal-output.png
-Replace the example filenames with the actual screenshot filenames in
-your repository. To display an image in this README, use Markdown image
-syntax, for example:
-![MITRE ATT&CK homepage](screenshots/01-mitre-homepage.png)
-Result
-The MITRE ATT&CK website, two technique pages, the Enterprise ATT&CK
-Matrix, and ATT&CK Navigator were explored. The observed techniques were
-identified by their ATT&CK names and IDs, and relevant defensive
-measures were listed.
-Conclusion
-This practical introduced the use of the MITRE ATT&CK framework for
-understanding and classifying adversary behavior. It demonstrated how
-technique pages and the Enterprise Matrix can help organize attack
-knowledge and support security analysis.
+## Practical Implementation
+
+### 1. Explore MITRE ATT&CK Website
+Visited the [MITRE ATT&CK official website](https://attack.mitre.org/) and explored its Enterprise ATT&CK resources.
+
+### 2. Exploitation for Privilege Escalation (T1068)
+Studied how attackers exploit software vulnerabilities to gain higher privileges and administrative access.
+
+### 3. Exploit Public-Facing Application (T1190)
+Explored how attackers exploit vulnerabilities in internet-facing applications to gain unauthorized access to systems.
+
+### 4. Explore Enterprise ATT&CK Matrix
+Studied the Enterprise Matrix to understand how attacker tactics and techniques are organized.
+
+- **Tactics:** Describe the attacker's objectives.
+- **Techniques:** Describe the methods used to achieve those objectives.
+
+### 5. Explore ATT&CK Navigator
+Opened ATT&CK Navigator and explored its matrix-based interface. It helps analysts highlight techniques and organize threat analysis using layers.
+
+### 6. Observe Practical Output
+Reviewed the terminal output captured during the practical. The executed command and its purpose should be added only after verifying the actual terminal command.
+
+## Techniques Observed
+
+| Technique | ATT&CK ID | Purpose |
+|---|---|---|
+| Exploitation for Privilege Escalation | T1068 | Exploiting vulnerabilities to gain higher privileges. |
+| Exploit Public-Facing Application | T1190 | Exploiting vulnerabilities in internet-facing applications. |
+
+**Note:** These techniques were explored as part of the practical. No actual cyberattack execution is claimed.
+
+## Security Mitigations
+1. Keep operating systems and applications updated.
+2. Fix vulnerabilities in internet-facing applications.
+3. Follow the Principle of Least Privilege.
+4. Monitor suspicious activities and privilege changes.
+5. Use endpoint protection and centralized logging.
+6. Perform regular vulnerability assessments and security audits.
+
+## Screenshots
+
+### 1. MITRE ATT&CK Homepage
+![MITRE Homepage](screenshots/01-mitre-homepage.png)
+
+### 2. Exploitation for Privilege Escalation
+![Privilege Escalation](screenshots/02-privilege-escalation.png)
+
+### 3. Exploit Public-Facing Application
+![Public Facing Application](screenshots/03-public-facing-application.png)
+
+### 4. Enterprise ATT&CK Matrix
+![Enterprise Matrix](screenshots/04-enterprise-matrix.png)
+
+### 5. ATT&CK Navigator
+![ATT&CK Navigator](screenshots/05-attack-navigator.png)
+
+### 6. Terminal Output
+![Terminal Output](screenshots/06-terminal-output.png)
+
+
+```
+
+## Result
+Successfully explored the MITRE ATT&CK website, Enterprise Matrix, two attack techniques, and ATT&CK Navigator. Identified their technique IDs and studied appropriate security mitigations.
+
+## Conclusion
+Through this practical, I learned how MITRE ATT&CK helps identify and classify different cyberattack techniques. I also understood how the Enterprise Matrix and ATT&CK Navigator support threat analysis and help security professionals improve system protection.
+
+
+**Experiment Number:** 08  
+**Topic:** Mapping Threats with MITRE ATT&CK  
+**Domain:** Cybersecurity | Threat Analysis
