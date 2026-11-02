@@ -54,25 +54,6 @@ Reviewed the terminal output captured during the practical. The executed command
 5. Use endpoint protection and centralized logging.
 6. Perform regular vulnerability assessments and security audits.
 
-## Screenshots
-
-### 1. MITRE ATT&CK Homepage
-![MITRE Homepage](screenshots/01-mitre-homepage.png)
-
-### 2. Exploitation for Privilege Escalation
-![Privilege Escalation](screenshots/02-privilege-escalation.png)
-
-### 3. Exploit Public-Facing Application
-![Public Facing Application](screenshots/03-public-facing-application.png)
-
-### 4. Enterprise ATT&CK Matrix
-![Enterprise Matrix](screenshots/04-enterprise-matrix.png)
-
-### 5. ATT&CK Navigator
-![ATT&CK Navigator](screenshots/05-attack-navigator.png)
-
-### 6. Terminal Output
-![Terminal Output](screenshots/06-terminal-output.png)
 
 
 ```
@@ -84,6 +65,6 @@ Successfully explored the MITRE ATT&CK website, Enterprise Matrix, two attack te
 Through this practical, I learned how MITRE ATT&CK helps identify and classify different cyberattack techniques. I also understood how the Enterprise Matrix and ATT&CK Navigator support threat analysis and help security professionals improve system protection.
 
 
-**Experiment Number:** 08  
-**Topic:** Mapping Threats with MITRE ATT&CK  
-**Domain:** Cybersecurity | Threat Analysis
+
+---
+
