@@ -94,7 +94,6 @@ The supplied report summary records 23 alerts:
 | Informational | 6 |
 | **Total** | **23** |
 
-The report's counts by risk and confidence are shown in [the summary screenshot](121001.png). These are scanner alerts, not proof that every issue is exploitable.
 
 ### 4.2 Alerts documented in the supplied report
 
@@ -151,16 +150,8 @@ All nine screenshots available with this task are embedded or linked above:
 
 The target-IP, ping, and DVWA security-level screenshots were not included with the available image files, so they are not linked here.
 
-## 7. Repository layout
 
-```text
-Experiment/
-├── README.md
-├── 113610.png
-├── 113755.png
-├── ...
-└── 121020.png  # Screenshot files are beside this README
-```
 
-If the exported ZAP HTML report is added later, it can be stored in a `reports/` directory.
+
+
 
