@@ -163,13 +163,4 @@ This experiment demonstrated the basic stages of ethical hacking, including reco
 - Never attempt exploitation on systems without permission.
 - Use the knowledge gained to understand vulnerabilities and improve system security.
 
-## Skills Learned
 
-- Ethical hacking fundamentals
-- Network reconnaissance
-- Nmap scanning
-- Vulnerability identification
-- Metasploit Framework
-- Exploit module selection
-- Basic post-exploitation
-- Linux command-line operations
