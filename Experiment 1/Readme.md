@@ -1,42 +1,60 @@
-Experiment 1: Scanning for Vulnerabilities in a Network
-
+Experiment 1: Scanning for Vulnerabilities in a Network
 Objective
-To identify active hosts and open ports on a target network using Nmap, and to detect known vulnerabilities on those hosts using Nessus. 
+To identify active hosts, open ports, running services, and known vulnerabilities on a target network using Nmap and Nessus.
 
+Tools Used
+Kali Linux
+Nmap
+Nessus
+Target Machine
 Procedure
-Step 1: Identify the IP address of the Kali machine
-Open the terminal in the Kali Linux machine and execute:
+Step 1: Check IP Address and Connectivity
+Check the IP address of the Kali machine and verify connectivity with the target machine.
+
 ifconfig
-The IP address of the Kali machine is identified as 192.168.42.136.
+ping <target-ip>
+Step 2: Discover Live Hosts
+Scan the network to identify active hosts.
 
-Step 2: Identify the IP address of the target machine
-Open the terminal in the Metasploitable machine and identify its IP address. The IP address of the Metasploitable machine is 192.168.42.136.
-Then, from Kali:
-ping 192.168.42.136
-After confirming connectivity, Nmap is used from Kali Linux to scan Metasploitable (192.168.42.136).
+nmap -sn 192.168.56.0/24
+Step 3: Scan Open Ports
+Scan the target machine to identify open ports and services.
 
-Step 3: Verify connectivity between the Kali and target machines
-From the Kali terminal, send ICMP packets to the target machine using:
-ping 192.168.42.136
-The successful replies confirm that the Kali machine can communicate with the target.
+nmap -sS <target-ip>
+Step 4: Detect Services and Operating System
+Detect the service versions and operating system of the target machine.
 
-Step 4: Scan the target machine for open ports
-Use Nmap to scan the target machine:
-nmap -Pn -n 192.168.42.136
+nmap -sV -O <target-ip>
+Step 5: Save Nmap Results
+Save the Nmap scan results into a text file.
 
-The scan identifies the open TCP ports and their associated services. The output shows ports such as 21 (FTP), 22 (SSH), 23 (Telnet), 25 (SMTP), 80 (HTTP), 139 (NetBIOS-SSN), 445 (Microsoft-DS), 3306 (MySQL), 5432 (PostgreSQL), 5900 (VNC), 6000 (X11) and others as open.
+nmap -sV -oN nmap_scan_results.txt <target-ip>
+Step 6: Launch Nessus
+Open the Nessus web interface and select New Scan → Basic Network Scan.
 
-Step 5: Launch Nessus
-Open the Nessus web interface in a browser, typically:
 https://localhost:8834
-Launch Nessus and proceed to the Nessus interface.
+Step 7: Configure and Launch the Scan
+Enter the target IP address, save the configuration, and launch the scan.
 
-Step 6: Configure and run the Nessus scan
-Create a new Basic Network Scan and enter the target IP address:
-192.168.42.136
-Save and launch the scan. Nessus analyzes the target for known security vulnerabilities.
+Step 8: Review Vulnerabilities
+Review the vulnerabilities detected by Nessus according to their severity:
 
-Step 7: Review the Nessus vulnerability results
-After the scan is completed, open the scan results. Nessus displays the vulnerabilities according to their severity, such as Critical, High, Medium, Low and Informational.
+Critical
+High
+Medium
+Low
+Info
+Step 9: Document Findings
+For Critical and High vulnerabilities, record:
 
-The obtained results include findings such as UnrealIRCd Backdoor Detection, VNC Server Password Password, SSL Version 2 and 3 Protocol Detection, Bind Shell Backdoor Detection, Apache Tomcat Multiple Issues, SSL Multiple Issues, NFS Shares World Readable, and Samba Backdoor Vulnerability.
+CVE ID
+Affected service/port
+Recommended remediation
+Result
+The active hosts, open ports, running services, and known vulnerabilities of the target network were identified and documented.
+
+Conclusion
+The experiment demonstrated the use of Nmap for network scanning and Nessus for vulnerability assessment.
+
+Ethical Consideration
+The experiment should be performed only on an authorized lab network or test machine.
